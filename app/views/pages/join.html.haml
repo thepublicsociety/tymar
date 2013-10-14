@@ -1,0 +1,57 @@
+= render :partial => "layouts/header"
+
+= render :partial => "layouts/footer"
+
+.content
+  .events.col
+    .header
+      %h3
+        How To Become A Yesman
+      = Section.find(3).content.html_safe unless Section.find(3).content.blank?
+      - if user_signed_in?
+        - if current_user.admin?
+          = link_to "edit", edit_section_path(Section.find(3)), :class => "edit-link"
+    %ul.unstyled
+      %h3
+        Upcoming Events & Actions
+      - if user_signed_in?
+        - if current_user.admin?
+          = link_to "add event", new_event_path, :class => "add-link"
+      - @events.each do |e|
+        %li
+          .date
+            = e.start.blank? ? "" : e.start.strftime("%m.%d.%y")
+          .location
+            = e.location
+            \.
+          .times
+            = e.start.blank? ? "" : e.start.strftime("%l%P")
+            \-
+            = e.end.blank? ? "" : e.end.strftime("%l%P")
+            \.
+          .info
+            = e.info
+  .groups.col
+    .header
+      %h3
+        Action Switch Board
+      = Section.find(4).content.html_safe unless Section.find(4).content.blank?
+      - if user_signed_in?
+        - if current_user.admin?
+          = link_to "edit", edit_section_path(Section.find(4)), :class => "edit-link"
+    %ul.unstyled
+      %h3
+        Groups We Support
+      - if user_signed_in?
+        - if current_user.admin?
+          = link_to "add group", new_group_path, :class => "add-link"
+      - @groups.each do |g|
+        %li
+          = g.name
+
+:javascript
+  $(function(){
+  
+  	$.backstretch("/assets/join-bg.jpg");
+  
+  });

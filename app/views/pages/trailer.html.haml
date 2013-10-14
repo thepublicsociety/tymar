@@ -1,0 +1,46 @@
+= render :partial => "layouts/header"
+
+.lman
+.rman
+.content
+  .video-container
+    .video-overlay
+      %a#play{:href => "#"}
+      %a#pause{:href => "#"}
+      %a#play-btn{:href => "#"}
+      %a#pause-btn{:href => "#"}
+    .video
+      #player
+        :javascript
+          var tag = document.createElement('script');
+          tag.src = "//www.youtube.com/iframe_api";
+          var firstScriptTag = document.getElementsByTagName('script')[0];
+          firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+          var player;
+          function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+              height: '100%',
+              width: '100%',
+              videoId: '9Ln3M8xfiZ8'
+            });
+          }
+          function onPlayerReady(event) {
+            $(".video").fitVids();
+          }
+          $("#play, #play-btn").on("click", function(){
+            player.playVideo();
+          });
+          $("#pause, #pause-btn").on("click", function(){
+            player.pauseVideo();
+          });
+
+= render :partial => "layouts/footer"
+
+
+:javascript
+  $(function(){
+  
+  	$.backstretch("/assets/home-bg.jpg");
+  	$("#page").backstretch("/assets/page-fg.png");
+  
+  });

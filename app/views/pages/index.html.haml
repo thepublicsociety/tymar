@@ -1,0 +1,20 @@
+= render :partial => "layouts/header"
+.homewrap
+  .background
+    = image_tag("/assets/background.png", :id => "figures", :usemap => "#bg_figures_Map")
+    = render :partial => "layouts/map"
+  .line
+    .name
+      Name of Person
+  .foreground
+    = image_tag("/assets/theyesmen.png")
+= render :partial => "layouts/footer"
+
+
+:javascript
+  $(function(){
+  
+  	$.backstretch("/assets/#{random_bg}");
+  	//$("#page").backstretch("/assets/home-fg.png");
+  
+  });

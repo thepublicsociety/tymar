@@ -1,0 +1,13 @@
+= render :partial => "layouts/header"
+
+.content
+  = render :partial => "hidden"
+= render :partial => "layouts/footer"
+
+
+:javascript
+  $(function(){
+  
+  	$.backstretch("/assets/secret-bg.jpg");
+  
+  });

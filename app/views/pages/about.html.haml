@@ -1,0 +1,23 @@
+= render :partial => "layouts/header"
+
+.content
+  .about.col
+    = Section.find(1).content.html_safe unless Section.find(1).content.blank?
+    - if user_signed_in?
+      - if current_user.admin?
+        = link_to "edit", edit_section_path(Section.find(1)), :class => "edit-link"
+  .about-info.col
+    = Section.find(2).content.html_safe unless Section.find(2).content.blank?
+    - if user_signed_in?
+      - if current_user.admin?
+        = link_to "edit", edit_section_path(Section.find(2)), :class => "edit-link"
+
+= render :partial => "layouts/footer"
+
+
+:javascript
+  $(function(){
+  
+  	$.backstretch("/assets/about-bg.jpg");
+  
+  });

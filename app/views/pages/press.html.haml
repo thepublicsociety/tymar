@@ -1,0 +1,67 @@
+= render :partial => "layouts/header"
+.content
+  .press.col
+    .header
+      %a.selected{:href => "#", :data => {:it => "coverage"}}
+        Press Coverage
+      %a{:href => "#", :data => {:it => "releases"}}
+        Press Releases
+    .contents
+      .coverage-container.press-container
+        %h3
+          Press Coverage
+        - if user_signed_in?
+          - if current_user.admin?
+            = link_to "add coverage", new_coverage_path, :class => "add-link"
+        %ul.unstyled
+          - @coverages.each do |c|
+            %li
+              .date
+                = link_to c.publish_date.blank? ? "" : c.publish_date.strftime("%m.%d.%y"), c.url, :target => "_blank"
+              .source
+                = link_to c.source, c.url, :target => "_blank"
+              .title
+                = surround("\"") do
+                  = link_to c.title, c.url, :target => "_blank"
+      .releases-container.press-container
+        %h3
+          Press Releases
+        - if user_signed_in?
+          - if current_user.admin?
+            = link_to "add release", new_release_path, :class => "add-link"
+        %ul.unstyled
+          - @releases.each do |r|
+            %li{:class => r == @releases.first ? "press-release" : "old-press-releases"}
+              .release-content
+                = r.content.blank? ? "" : r.content.html_safe
+  .photos.col
+    .header
+      %h3
+        Download Press Photographs
+    .photo-container
+      - if user_signed_in?
+        - if current_user.admin?
+          = link_to "add photograph", new_photograph_path, :class => "add-link"
+      %ul.unstyled
+        - @photographs.each do |p|
+          %li
+            %a{:href => "#modal#{p.id}", :data => {:toggle => "modal"}}
+              = image_tag(p.photo.url(:thumb))
+            .modal.hide.fade{:id => "modal#{p.id}"}
+              .modal-header
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              .modal-body
+                = image_tag(p.photo.url)
+              .modal-footer
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                <a href="#{p.photo.url}" target="_blank" class="btn btn-primary">Download Image</a>
+
+= render :partial => "layouts/footer"
+
+
+:javascript
+  $(function(){
+  
+  	$.backstretch("/assets/press-bg.jpg");
+  
+  });

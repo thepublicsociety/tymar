@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+  <title><%= title %></title>
+  <meta charset="UTF-8" />
+  <meta name="description" content="<%= metatag %>" />
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=yes">-->
+  <link rel="icon" type="image/x-icon" href="/favicon.png" />
+
+  <%= stylesheet_link_tag "application" %>
+
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script>
+		if (typeof jQuery == 'undefined') {
+			document.write(unescape("%3Cscript src='/javascripts/jquery.min.js' type='text/javascript'%3E%3C/script%3E"));
+		}
+	</script>
+  <%= javascript_include_tag "application" %>
+  <% if controller.action_name == "edit" || controller.action_name == "new" %>
+    <%= render :partial => "layouts/tinymce" %>
+  <% end %>
+ 
+  <!--[if lt IE 9]>
+  	<script src="/javascripts/selectivizr-min.js"></script>
+  	<script src="/javascripts/css3-mediaqueries"></script>
+  <![endif]-->
+
+  <%= csrf_meta_tag %>
+  
+</head>
+<body class="<%= user_signed_in? ? "authenticated" : "unauthenticated" %> <%= controller.controller_name %> <%= controller.action_name %> <%= controller.controller_name %>-<%= controller.action_name %> <%= bodyclass %>">
+  <div class="messages">
+		<div class="msg"><%= notice %><%= alert %></div>
+	</div>
+  
+  <% unless controller.action_name == "index" %><div id="page" class="page <%= controller.controller_name %> <%= controller.action_name %> <%= controller.controller_name %>-<%= controller.action_name %>">
+    <div id="overlay" class="page <%= controller.controller_name %> <%= controller.action_name %> <%= controller.controller_name %>-<%= controller.action_name %>"><% end %>
+      <%= yield %>
+    <% unless controller.action_name == "index" %></div>
+  </div><% end %>
+  
+<script>
+  console.log("<%= Rails.env %>");
+</script>
+</body>
+</html>

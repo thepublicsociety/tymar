@@ -1,0 +1,22 @@
+= nav_bar :responsive => true do
+  = menu_group do
+    = menu_item "Home", root_path
+    = menu_divider
+    = menu_item "Page Sections", "/sections"
+  %ul.nav.pull-right
+    %li.dropdown
+      %a.dropdown-toggle{:href => "#", :data => {:toggle => "dropdown"}}
+        %span.normal-text
+          Logged in as
+        %span#username
+          = current_user.blank? ? "Guest" : current_user.email
+        %b.caret
+      %ul.dropdown-menu
+        - if current_user
+          %li
+            %a{:class => "logout", :href => "/logout"}
+              Log out
+        - else
+          %li
+            %a{:class => "logout", :href => "/login"}
+              Log in

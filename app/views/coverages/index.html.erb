@@ -1,0 +1,30 @@
+<%= render :partial => "layouts/admin_header" %>
+<h1>Listing coverages</h1>
+
+<table class="table table-bordered">
+  <tr>
+    <th>Publish date</th>
+    <th>Source</th>
+    <th>Title</th>
+    <th>Content</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @coverages.each do |coverage| %>
+  <tr>
+    <td><%= coverage.publish_date %></td>
+    <td><%= coverage.source %></td>
+    <td><%= coverage.title %></td>
+    <td><%= coverage.content %></td>
+    <td><%= link_to 'Show', coverage %></td>
+    <td><%= link_to 'Edit', edit_coverage_path(coverage) %></td>
+    <td><%= link_to 'Destroy', coverage, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Coverage', new_coverage_path %>

@@ -1,0 +1,18 @@
+%header
+  .container
+    .row
+      .span12
+        #logo
+          %h1
+            = link_to "The Yes Men Are Revolting", root_path
+        %nav
+          %ul.unstyled
+            %li.about
+              = link_to "about", "/about", :class => controller.action_name == "about" ? "active" : ""
+            %li.trailer
+              = link_to "watch the trailer", "/trailer", :class => controller.action_name == "trailer" ? "active" : ""
+            %li.revolution
+              = link_to "join the revolution", "/join", :class => controller.action_name == "join" ? "active" : ""
+            %li.press
+              = link_to "press", "/press", :class => controller.action_name == "press" ? "active" : ""
+        

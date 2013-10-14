@@ -1,0 +1,65 @@
+.access-approved
+  .col.entries
+    .header
+      %h3
+        Secret Content
+      - if user_signed_in?
+        - if current_user.admin?
+          = link_to "add content", new_secret_path, :class => "add-link"
+    %ul.unstyled.secrets
+      - @secrets.each do |s|
+        %li
+          .title
+            %h3
+              = link_to s.title, "#", "data-id" => s.id
+          - unless s.image.path.blank?
+            - if File.exists?(s.image.path)
+              .photo
+                = image_tag(s.image.url(:display))
+          - unless s.youtube.blank?
+            .youtube
+              <div id='video_#{s.id}'></div>
+          .secret-content
+            = s.blurb.blank? ? "" : s.blurb.html_safe
+          .date
+            = s.publish_date.blank? ? "" : s.publish_date.strftime("%m.%d.%y")
+      
+  .col.lists
+    .recent
+      .header
+        %h3
+          Recent Entries
+      %ul.unstyled.secrets-list
+        - @secrets.each do |s|
+          %li
+            .date
+              = s.publish_date.blank? ? "" : s.publish_date.strftime("%m.%d.%y")  
+            .link
+              = link_to s.title, "#", "data-id" => s.id
+    .blogs
+      .header
+        %h3
+          Blog Roll
+        - if user_signed_in?
+          - if current_user.admin?
+            = link_to "add blog", new_blog_path, :class => "add-link"
+      %ul.unstyled
+        %li
+          - @blogs.each do |b|
+            %li
+              = link_to b.title, b.url, :target => "_blank"
+%script
+  - @secrets.each do |s|
+    var player_#{s.id.to_s};
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  function onYouTubeIframeAPIReady() {
+  - @secrets.each do |s|
+    player_#{s.id.to_s} = new YT.Player('video_#{s.id.to_s}', {
+    height: '262',
+    width: '481',
+    videoId: '#{s.youtube}'
+    });
+  }

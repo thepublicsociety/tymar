@@ -1,0 +1,83 @@
+%footer
+  .container
+    .row
+      .span12
+        .footer-links
+          #twitter
+            = link_to "Twitter", "#"
+          #email
+            .heading
+              Enter your email address and receive a link to secret content
+            .entry
+              = text_field_tag "email_address", "Enter your email here"
+          #facebook
+            = link_to "Facebook", "#"
+  .footer-content
+    .container
+      .row
+        .social-header
+          .t-logo
+          .f-logo
+        .span6.twitter-shit
+          .twitter-contents
+            .t-header
+              .y-logo
+              .t-text
+                .y-text-header
+                  The Yes Men
+                .y-text-subheader
+                  @theyesmen
+            %ul.unstyled
+              - if @tweets.class == Array
+                - @tweets.each do |t|
+                  %li
+                    %p
+                      %span
+                        %a{:href => "https://twitter.com/theyesmen/status/#{t.id}", :target => "_blank"}
+                          TheYesMen
+                      = t.text.blank? ? "Error parsing Twitter feed" : t.text.gsub( %r{http://[^\s<]+} ) { |url| "<a href='#{url}'>#{url}</a>"}.html_safe
+                    .meta-actions
+                      .date
+                        = time_ago_in_words(t.created_at) unless t.created_at.blank?
+                        ago
+                      .h-separator
+                        \-
+                      .reply
+                        %a{:href => "https://twitter.com/theyesmen/status/#{t.id}", :data => {:id => t.id, :action => "reply"}, :target => "_blank"}
+                          reply
+                      .h-separator
+                        \-
+                      .retweet.twitter-action
+                        %a{:href => "/auth/twitter", :data => {:id => t.id, :action => "retweet"}}
+                          retweet
+                      .h-separator
+                        \-
+                      .favorite.twitter-action
+                        %a{:href => "/auth/twitter", :data => {:id => t.id, :action => "favorite"}}
+                          favorite
+                      
+                    
+        .span6.facebook-shit
+          %ul.unstyled
+            - unless @facebook.nil?
+              - @facebook.each do |f|
+                %li
+                  .y-logo
+                  .f-contents
+                    .f-header
+                      = link_to "The Yes Men", f["actions"][0]["link"], :target => "_blank"
+                    %p
+                      = f["message"].gsub( %r{http://[^\s<]+} ) { |url| "<a href='#{url}'>#{url}</a>"}.html_safe unless f["message"].blank?
+                    .meta-actions
+                      %a.likes.fb-action{:href => "/auth/facebook", :data => {:action => "like", :id => f["id"]}}
+                        = f["likes"].blank? ? "0" : f["likes"]["count"]
+                      %a.comments{:href => f["actions"][0]["link"], :target => "_blank"}
+                        = f["comments"].blank? ? "0" : f["comments"]["count"]
+                      %a.shares{:href => f["actions"][0]["link"], :target => "_blank"}
+                        = f["shares"].blank? ? "0" : f["shares"]["count"]
+                      .h-separator
+                        \-
+                      .time
+                        = time_ago_in_words(f["created_time"])
+                        ago
+                      .thing

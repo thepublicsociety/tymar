@@ -1,0 +1,28 @@
+<%= simple_form_for(@event) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <label class="string optional control-label" for="event_start">Start date/time</label>
+    <div id="event-start_datetimepicker" class="input-append">
+      <input value="<%= @event.start.strftime("%m/%d/%Y %I:%M:%S %p") unless @event.start.blank? %>" class="string optional date-time-pick" id="event_start" name="event[start]" size="50" type="text" data-format="MM/dd/yyyy HH:mm:ss PP"></input>
+      <span class="add-on">
+        <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+      </span>
+    </div>
+    
+    <label class="string optional control-label" for="event_end">Start date/time</label>
+    <div id="event-end_datetimepicker" class="input-append">
+      <input value="<%= @event.end.strftime("%m/%d/%Y %I:%M:%S %p") unless @event.end.blank? %>" class="string optional date-time-pick" id="event_end" name="event[end]" size="50" type="text" data-format="MM/dd/yyyy HH:mm:ss PP"></input>
+      <span class="add-on">
+        <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+      </span>
+    </div>
+
+    <%= f.input :location %>
+    <%= f.input :info, :as => "string" %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

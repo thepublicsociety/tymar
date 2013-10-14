@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Publish date:</b>
+  <%= @coverage.publish_date %>
+</p>
+
+<p>
+  <b>Source:</b>
+  <%= @coverage.source %>
+</p>
+
+<p>
+  <b>Title:</b>
+  <%= @coverage.title %>
+</p>
+
+<p>
+  <b>Content:</b>
+  <%= @coverage.content %>
+</p>
+
+
+<%= link_to 'Edit', edit_coverage_path(@coverage) %> |
+<%= link_to 'Back', coverages_path %>
